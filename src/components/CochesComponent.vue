@@ -10,15 +10,19 @@
 </template>
 
 <script>
-import axios from "axios";
-import Global from "./../Global"
+//utilizamos el servicio para que realice lo mismo
+import ServiceCoches from "./../services/ServiceCoches";
+const service = new ServiceCoches();
+
+// import axios from "axios";
+// import Global from "./../Global"
 //SI NECESITAMOS VARIABLES DECLARADAS PARA UTILIZARLAS EN TODOS
 //LOS METODOS (mounted,created,methods) LA DECLARAMOS AQUÍ
 // FORMA MANUAL
 // let urlApiCoches = "https://apicochespaco.azurewebsites.net/";
 
 //FORMA CON GLOBAL
-let urlApiCoches = Global.urlApiCoches;
+// let urlApiCoches = Global.urlApiCoches;
 
 export default {
   name: "CochesComponent",
@@ -28,14 +32,18 @@ export default {
     };
   },
   mounted() {
-    let request = "webresources/coches";
+    service.getCoches.then((result) => {
+      this.coches = result;
+    });
+
+    // let request = "webresources/coches";
     //LAS VARIABLES DECLARADAS POR ENCIMA DE export default
     //NO UTILIZAN LA PALABRA this
-    let url = urlApiCoches + request;
-    axios.get(url).then((response) => {
-      console.log("leyendo servicio...");
-      this.coches = response.data;
-    });
+    // let url = urlApiCoches + request;
+    // axios.get(url).then((response) => {
+    //   console.log("leyendo servicio...");
+    //   this.coches = response.data;
+    // });
   },
 };
 </script>

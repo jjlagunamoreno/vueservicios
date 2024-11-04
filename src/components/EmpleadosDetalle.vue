@@ -23,20 +23,26 @@
 </template>
 
 <script>
-import axios from "axios";
-import Global from "./../Global";
+// import axios from "axios";
+// import Global from "./../Global";
+import ServiceEmpleados from "./../services/ServiceEmpleados";
 
+const service = new ServiceEmpleados();
 export default {
   name: "EmpleadosDetalle",
   methods: {
     buscarEmpleado() {
-      let request = "api/empleados/" + this.idEmpleado;
-      let url = Global.urlApiEmpleados + request;
-
-      axios.get(url).then((response) => {
-        console.log(response.data);
-        this.empleado = response.data;
+      service.findEmpleado(this.idEmpleado).then((result) => {
+        this.empleado = result;
       });
+
+      // let request = "api/empleados/" + this.idEmpleado;
+      // let url = Global.urlApiEmpleados + request;
+
+      // axios.get(url).then((response) => {
+      //   console.log(response.data);
+      //   this.empleado = response.data;
+      //});
     },
   },
   data() {
@@ -47,12 +53,15 @@ export default {
     };
   },
   mounted() {
-    let request = "api/empleados";
-    let url = Global.urlApiEmpleados + request;
+    // let request = "api/empleados";
+    // let url = Global.urlApiEmpleados + request;
 
-    axios.get(url).then((response) => {
-      console.log("leyendo para ...");
-      this.empleados = response.data;
+    // axios.get(url).then((response) => {
+    //   console.log("leyendo para ...");
+    //   this.empleados = response.data;
+    // });
+    service.getEmpleados().then((result) => {
+      this.empleados = result;
     });
   },
 };
